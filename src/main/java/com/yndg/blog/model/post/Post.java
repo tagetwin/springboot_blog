@@ -1,4 +1,4 @@
-package com.yndg.blog.model;
+package com.yndg.blog.model.post;
 
 import java.security.Timestamp;
 
@@ -10,19 +10,20 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment {
-
+public class Post {
+	
 	private int id;
-	private int userId;
-	private int postId;
+	private String title;
 	private String content;
+	private int userId;
 	private Timestamp createDate;
 	
 	@Builder
-	public Comment(int userId, int postId, String content) {
-		this.userId = userId;
-		this.postId = postId;
+	public Post(String title, String content, int userId) {
+		this.title = title;
 		this.content = content;
+		this.userId = userId;
 	}
+	
 	
 }

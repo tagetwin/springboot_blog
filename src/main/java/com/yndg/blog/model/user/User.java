@@ -1,15 +1,15 @@
-package com.yndg.blog.model;
+package com.yndg.blog.model.user;
 
-import java.security.Timestamp;
+
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 public class User {
 	private int id;
 	private String username;
@@ -17,15 +17,6 @@ public class User {
 	private String email;
 	private String profile;
 	private Timestamp createDate;
-	
-	@Builder
-	public User(String username, String password, String email, String profile) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.profile = profile;
-	}
 	
 	
 }
