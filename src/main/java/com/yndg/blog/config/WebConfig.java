@@ -7,6 +7,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
+import com.yndg.blog.aop.SessionInterceptor;
+
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
 
@@ -26,9 +28,10 @@ public class WebConfig implements WebMvcConfigurer{
 		
 	}
 	
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(null) // 2. 이( )클래스를 실행시키겠다.
+		registry.addInterceptor(new SessionInterceptor()) // 2. 이( )클래스를 실행시키겠다.
 			 .addPathPatterns("/user/profile/**") // 1. 이 주소를 들어가면
 			 .addPathPatterns("/post/**")
 			 .addPathPatterns("/post/update/**")

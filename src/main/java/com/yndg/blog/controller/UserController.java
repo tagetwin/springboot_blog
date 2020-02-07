@@ -60,21 +60,12 @@ public class UserController {
 		
 		User principal = (User) session.getAttribute("principal");
 		
-		if(principal != null) {
-			if(principal.getId() == id) {
-				return "/user/profile";
-			}else {
-				// 잘못된 접근입니다. 권한이 없습니다.
-//				Script.href(resp, "잘못된 접근입니다.", "/");
-				return "user/login";
-				// printwrite
-				// return null;
-			}
+		if(principal.getId() == id) {
+			return "/user/profile";
 		}else {
 			// 인증이 되지 않은 사용자 입니다.
 			return "user/login";
 		}
-		
 	}
 	
 	// 메시지 컨버터는 request 받을때 setter로 호출한다.
