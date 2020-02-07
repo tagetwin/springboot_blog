@@ -15,6 +15,20 @@
 		select * from post where id = #{id}
 	</select>
 	
+	<delete id="delete">
+		delete from post where id = #{id}
+	</delete>
 	
+	<insert id="save">
+		insert into post (title, content, userId, createDate) values(#{title}, #{content}, #{userId}, now());
+	</insert>
+	
+	<select id="update" resultType="com.yndg.blog.model.post.Post">
+		select * from post where id = #{id}
+	</select>
+	
+	<update id="updateProc" >
+		UPDATE post SET title = #{title}, content = #{content} WHERE id = #{id};
+	</update>
 	
 </mapper>

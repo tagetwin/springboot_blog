@@ -14,8 +14,14 @@
 		</div>
 
 		<div class="card-footer">
-			<button id="post--update--submit" class="btn btn-warning" >수정</button>
-			<button id="post--delete--submit" class="btn btn-danger" value="${post.id}">삭제</button>
+			<c:choose>
+				<c:when test="${sessionScope.principal.id eq post.userId}">
+					<input type="hidden" id="userId" value="${post.userId}" />
+					<button id="post--update--submit" class="btn btn-warning" value="${post.id}">수정</button>
+					<button id="post--delete--submit" class="btn btn-danger" value="${post.id}">삭제</button>
+				</c:when>
+			</c:choose>
+
 			<a href="/" class="btn btn-primary">목록</a>
 		</div>
 	</div>
@@ -31,42 +37,67 @@
 			</div>
 		</div>
 	</div>
-	<br/>
+	<br />
 
 	<div class="card">
 		<div class="form-group">
 			<div class="card-header">
 				<h4 class="card-title">댓글 리스트</h4>
 			</div>
-			
+
 			<div class="comment--items card-body">
-			
+
 				<div class="comment--item">
-					<span class="comment--content">댓글내용1</span>
-					<span id="comment--delete--submit" value="1">X</span>
+					<span class="comment--content">댓글내용1</span> <span id="comment--delete--submit" value="1">X</span>
 				</div>
-		
+
 				<div class="comment--item">
-					<span class="comment--content">댓글내용2</span>
-					<span id="comment--delete--submit" value="2">X</span>
+					<span class="comment--content">댓글내용2</span> <span id="comment--delete--submit" value="2">X</span>
 				</div>
-					
+
 				<div class="comment--item">
-					<span class="comment--content">댓글내용3</span>
-					<span id="comment--delete--submit" value="3">X</span>
+					<span class="comment--content">댓글내용3</span> <span id="comment--delete--submit" value="3">X</span>
 				</div>
-				
+
 			</div>
-			
+
 		</div>
 	</div>
 </div>
 <script>
-
+	
 $('#post--delete--submit').on('click', function(){
-	var no = $('#post--delete--submit').val();
-	console.log(no);
-	location.href='/post/delete/'+no;
+	
+	var data = {
+		id : $('#post--delete--submit').val(),
+		userId : $('#userId').val()
+	}
+
+	
+	$.ajax({
+		type : 'DELETE',
+		url : '/post/delete/',
+		data : JSON.stringify(data),
+		contentType : 'application/json; charset=utf-8',
+		dataType :'json'
+		
+	}).done(function(r){
+		alert('글을 삭제하였습니다.');
+		location.href='/post';	
+		
+	}).fail(function(r){
+		alert('접근이 올바르지 않습니다.');		
+		
+	});
+	
+});
+
+$('#post--update--submit').on('click', function(){
+	
+	var id = $('#post--update--submit').val();
+	var userId = $('#userId').val();
+	location.href='/post/update?id='+id+'&userId='+userId;
+	
 });
 </script>
 
