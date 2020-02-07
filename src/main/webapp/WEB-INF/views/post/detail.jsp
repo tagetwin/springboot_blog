@@ -6,16 +6,16 @@
 
 	<div class="card">
 		<div class="card-header">
-			<h4 class="card-title">제목</h4>
+			<h4 class="card-title">${post.title}</h4>
 		</div>
 
 		<div class="card-body">
-			<p class="card-text">내용</p>
+			<p class="card-text">${post.content}</p>
 		</div>
 
 		<div class="card-footer">
-			<button id="post--update--submit" class="btn btn-warning">수정</button>
-			<button id="post--delete--submit" class="btn btn-danger">삭제</button>
+			<button id="post--update--submit" class="btn btn-warning" >수정</button>
+			<button id="post--delete--submit" class="btn btn-danger" value="${post.id}">삭제</button>
 			<a href="/" class="btn btn-primary">목록</a>
 		</div>
 	</div>
@@ -61,7 +61,14 @@
 		</div>
 	</div>
 </div>
+<script>
 
+$('#post--delete--submit').on('click', function(){
+	var no = $('#post--delete--submit').val();
+	console.log(no);
+	location.href='/post/delete/'+no;
+});
+</script>
 
 <%@ include file="../include/footer.jsp"%>
 
