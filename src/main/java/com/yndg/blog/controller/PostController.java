@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yndg.blog.model.user.User;
 
+// 안녕 시큐리티 구현 완료
+
+
 @Controller
 public class PostController {
 	
