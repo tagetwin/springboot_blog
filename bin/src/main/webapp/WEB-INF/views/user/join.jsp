@@ -65,7 +65,7 @@
 			}
 			
 		}).fail(function(r){
-			console.log(r);
+// 			console.log(r);
 
 			var check =r.responseJSON;
 			
