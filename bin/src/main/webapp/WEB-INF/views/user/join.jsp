@@ -28,7 +28,6 @@
 
 </div>
 
-<<<<<<< HEAD
 <script>
 
 	$('#join--submit').on('click', function(){
@@ -66,7 +65,7 @@
 			}
 			
 		}).fail(function(r){
-			console.log(r);
+// 			console.log(r);
 
 			var check =r.responseJSON;
 			
@@ -89,9 +88,6 @@
 	});
 
 </script>
-=======
-<script src="/js/join.js"></script>
->>>>>>> 6d33233bbbed3dcd7c7fca03557d54855b92c667
 
 
 <%@ include file="../include/footer.jsp"%>
