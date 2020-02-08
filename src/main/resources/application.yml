@@ -18,9 +18,7 @@ spring:
   servlet:
     multipart:
       enabled: true
-      max-file-size: 1MB
+      max-file-size: 5MB
 
 file:
-  path: c:/src/springbootWork/springboot-blog/media/
-        
-    
+  path: C:/src/springboot_blog/media/

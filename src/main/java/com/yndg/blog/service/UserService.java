@@ -1,8 +1,15 @@
 package com.yndg.blog.service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.yndg.blog.model.ReturnCode;
 import com.yndg.blog.model.user.User;
@@ -16,6 +23,9 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Value("${file.path}")
+	private String fileRealPath;
+	
 	@Transactional
 	public int 회원가입(ReqJoinDto dto) {
 
@@ -37,5 +47,29 @@ public class UserService {
 	public User 로그인(ReqLoginDto dto) {
 		return userRepository.findByUsernameAndPassword(dto);
 		
+	}
+	
+	@Transactional
+	public int 프로필(int id, String password, MultipartFile profile) {
+
+		UUID uuid = UUID.randomUUID();
+		String uuidFilename = uuid + "_" + profile.getOriginalFilename();
+			
+		Path filePath = Paths.get(fileRealPath+uuidFilename);
+		
+		System.out.println(uuidFilename);
+		try {
+			
+			int result = userRepository.update(id, password, uuidFilename);
+			Files.write(filePath, profile.getBytes());
+			if (result == 1) {
+				return result;
+			} else {
+				return ReturnCode.오류;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
 	}
 }

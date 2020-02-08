@@ -1,5 +1,6 @@
 package com.yndg.blog.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.yndg.blog.model.RespCM;
 import com.yndg.blog.model.ReturnCode;
@@ -34,6 +37,7 @@ public class UserController {
 	
 	@Autowired
 	private HttpSession session;
+	
 	
 	@GetMapping("/user/join")
 	public String join() {
@@ -102,25 +106,27 @@ public class UserController {
 	public ResponseEntity<?> login(@Valid @RequestBody ReqLoginDto dto, BindingResult bindingResult) {
 
 		// request 검증 = AOP 로 처리할 예정
-		
-		
 		// 서비스 호출
 		User principal = userService.로그인(dto);
-		
-		
-		
 		if(principal != null) {
-			
 			session.setAttribute("principal", principal);
 			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
-			
 		}else {
-			
 			return new ResponseEntity<RespCM>(new RespCM(400, "fail"), HttpStatus.BAD_REQUEST);
 			
 		}
 	}
 	
-	
+	@PostMapping("/user/profile/")
+	public String update(@RequestParam int id, String password,@RequestParam("profile") MultipartFile profile) {
+		
+		int result = userService.프로필(id, password, profile);
+					
+		if(result == 1) {
+			return "user/profile";
+		}else {
+			return "post";
+		}
+	}
 }
 

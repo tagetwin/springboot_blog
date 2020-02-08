@@ -17,4 +17,8 @@
 		select id, username, email, profile from user where username = #{username} and password = #{password}
 	</select>
 	
+	<update id="update">
+		update user set password = #{password}, profile = #{profile} WHERE id = #{id};
+	</update>
+	
 </mapper>
