@@ -24,12 +24,7 @@ public class UserService {
 			int result = userRepository.findByUsername(dto.getUsername());
 
 			if (result == 1) {
-<<<<<<< HEAD
-				return RespCode.아이디중복;
-				
-=======
 				return ReturnCode.아이디중복;
->>>>>>> 6d33233bbbed3dcd7c7fca03557d54855b92c667
 			} else {
 				return userRepository.save(dto);
 			}
