@@ -65,7 +65,48 @@
 	</div>
 </div>
 <script>
+$('#comment--save--submit').on('click', function(){
+
+	var reply = $('#content').val();
+	var userId = '';
+	var postId = '';
+
+	data = {
+		comment : reply,
+		userId : '',
+		postId : ''
+	};
+
+	$.ajax({
+
+		type : 'POST',
+		url : '/comment/write',
+		data : JSON.stringify(data),
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json'
+
+	}).DONE(function(r){
+
+		var res= '';
+		res += "<div class='comment--item'>";
+		res += "<span class='comment--content'>"+ r.comment +"</span>"
+		res += "<span id='comment--delete--submit value='" + r.userId + "'>X</span></div>"
+
+	$('.comment--items').prepend(res);
+
+	}).fail(function(r){
+		alert('통신에러');
+
+	});
+
 	
+});
+
+$('body').on('click', '#comment--delete--submit', function(){
+	alert('댓글 삭제');
+});
+
+
 $('#post--delete--submit').on('click', function(){
 	
 	var data = {

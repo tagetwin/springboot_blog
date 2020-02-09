@@ -18,6 +18,11 @@
 td{
 	cursor : pointer;
 }
+.comment--item{
+	border-style: solid;
+	background-color: antiquewhite;
+	margin-bottom: 4px;
+}
 
 </style>
 
