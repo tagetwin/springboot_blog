@@ -28,22 +28,6 @@
 	</table>
 </div>
 
-
-<script>
-// $('.pno').on('click', function(){
-
-// 	var tr = $(this);
-// 	var td = tr.children();
-// 	var no = td.eq(0).text();
-// 	console.log(no);
-// 	location.href='/post/detail/'+no;
-		
-// });
-
-
-</script>
-
-
 <%@ include file="../include/footer.jsp"%>
 
 

@@ -34,8 +34,11 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addInterceptor(new SessionInterceptor()) // 2. 이( )클래스를 실행시키겠다.
 			 .addPathPatterns("/user/profile/**") // 1. 이 주소를 들어가면
 			 .addPathPatterns("/post/update/**")
-			 .addPathPatterns("/post/write/")
-			 .addPathPatterns("/post/delete/");
+			 .addPathPatterns("/post/write/**")
+			 .addPathPatterns("/post/delete/**")
+			 .addPathPatterns("/comment/delete/**")
+			 .addPathPatterns("/comment/write/**")
+			 ;
 		
 		
 		// addExcludePatterns() 제외시킬떄 사용

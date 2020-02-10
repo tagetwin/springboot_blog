@@ -42,7 +42,7 @@ public class CommentController {
 	@DeleteMapping("/comment/delete/{id}")
 	public ResponseEntity<?> write(@PathVariable int id) {
 		int result = commentService.댓글삭제(id);
-
+		System.out.println("삭제결과 :"+result);
 		if(result == 1) {
 			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
 		

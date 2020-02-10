@@ -1,10 +1,15 @@
 package com.yndg.blog.service;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yndg.blog.model.ReturnCode;
+import com.yndg.blog.model.comment.Comment;
 import com.yndg.blog.model.comment.dto.ReqDetailDto;
 import com.yndg.blog.model.comment.dto.RespDetailDto;
+import com.yndg.blog.model.user.User;
 import com.yndg.blog.repository.CommentRepository;
 
 @Service
@@ -12,6 +17,9 @@ public class CommentService {
 	
 	@Autowired
 	private CommentRepository commentRepository;
+	
+	@Autowired
+	private HttpSession session;
 	
 	
 	public RespDetailDto 댓글쓰기(ReqDetailDto dto) {
@@ -26,9 +34,18 @@ public class CommentService {
 		}
 	}
 	
-	
 	public int 댓글삭제(int	id) {
-		return commentRepository.delete(id);
-
+		User principal = (User) session.getAttribute("principal");
+		Comment comment = commentRepository.deleteId(id);
+		
+		if(principal.getId() == comment.getUserId()) {
+			return commentRepository.delete(id);
+		}else {
+			return ReturnCode.오류;
+		}
+		
 	}
+	
+
+	
 }

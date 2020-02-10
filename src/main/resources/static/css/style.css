@@ -19,3 +19,6 @@ td{
 	font-size: 15px;
 	
 }
+#del{
+	cursor: pointer;
+}

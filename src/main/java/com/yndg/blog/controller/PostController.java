@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.yndg.blog.model.RespCM;
+import com.yndg.blog.model.comment.Comment;
 import com.yndg.blog.model.post.Post;
 import com.yndg.blog.model.post.dto.ReqUpdateDto;
 import com.yndg.blog.model.post.dto.ReqWriteDto;
@@ -50,7 +51,10 @@ public class PostController {
 	public String detail(@PathVariable int id, Model model) {
 		
 		Post post = postService.상세보기(id);
+		List<Comment> comments = postService.댓글불러오기(id);
+		
 		model.addAttribute("post", post);
+		model.addAttribute("comments", comments);
 		
 		return "/post/detail";
 	}

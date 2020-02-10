@@ -33,12 +33,11 @@ $('#comment--save--submit').on('click', function(){
 
 function makeCommentItem(r){
 	var comment_item = `<div id="comment--item--${r.id}">`;
-	comment_item += `<div class="comment--item">`;
-	comment_item += `<span class="comment--username">작성자 : ${r.username}</span>`;
-	comment_item += `<span class="comment--content">${r.content}</span>`;
-	comment_item += `<button onclick="commentDelete(${r.id})">삭제</button>`;
-	comment_item += `</div>`;
-	comment_item += `</div>`;
+	comment_item += `<ul class="comment--item list-group">`;
+	comment_item += `<li class="comment--username list-group-item d-flex justify-content-between align-items-center">${r.username}`;
+	comment_item += `<span id="del" class="badge badge-primary badge-pill" onclick="commentDelete(${r.id})">삭제</span>`;
+	comment_item += `<li class="comment--username list-group-item"><span class="comment--content">${r.content}</span></li>`;
+	comment_item += `</ul>`;
 	
 	$('#comment--items').prepend(comment_item);
 	

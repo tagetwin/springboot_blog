@@ -52,6 +52,11 @@
 		});
 	})
 	
+$("#password").keydown(function (key) {
+	if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+		$('#login--submit').click();
+	}
+});
 // 엔터키 치면 바로 로그인 되게
 	
 	
