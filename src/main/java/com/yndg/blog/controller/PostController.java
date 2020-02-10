@@ -93,11 +93,6 @@ public class PostController {
 			return "/";
 			
 	}		
-//		Post post = postService.수정페이지(id);
-//		model.addAttribute("post", post);
-//		
-//		return "/post/detail";
-		
 	
 	@DeleteMapping("/post/delete/{id}") 	// 인증체크 - 로그인 한사람만 글 삭제 가능 + 해당글은 쓴 사람만 삭제 가능
 	public ResponseEntity<?> delete(@PathVariable int id) {

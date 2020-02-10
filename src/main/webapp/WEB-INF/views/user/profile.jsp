@@ -23,8 +23,12 @@
 		
 		<div class="form-group">
 			<label for="profile">프로필 사진:</label>
-			<input type="file" class="form-control" name="profile" />
+			<input type="file" class="form-control" name="profile" id="input_img"/>
 			<p class="my__profile">${sessionScope.principal.profile}</p>
+			<div class="img_wrap">
+				<img id="img" width="150px"/>
+			</div>
+
 		</div>
 		<button id="profile--submit" class="btn btn-primary">수정</button>	
 	</form:form>
@@ -33,8 +37,7 @@
 
 </div>
 
-<script>
-</script>
+<script src="/js/profile.js"></script>
 <%@ include file="../include/footer.jsp"%>
 
 

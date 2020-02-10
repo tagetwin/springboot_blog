@@ -27,6 +27,7 @@ import com.yndg.blog.model.user.User;
 import com.yndg.blog.model.user.dto.ReqJoinDto;
 import com.yndg.blog.model.user.dto.ReqLoginDto;
 import com.yndg.blog.service.UserService;
+import com.yndg.blog.util.Script;
 
 @Controller
 public class UserController {
@@ -125,20 +126,10 @@ public class UserController {
 		int result = userService.프로필(id, password, profile);
 		System.out.println("result"+result);
 		
-		StringBuffer sb = new StringBuffer();
-		
 		if(result == 1) {
-			sb.append("<script>");
-			sb.append("alert('수정완료');");
-			sb.append("location.href='/';");
-			sb.append("</script>");
-			return sb.toString();
+			return Script.href("수정완료", "/");
 		}else {
-			sb.append("<script>");
-			sb.append("alert('수정실패');");
-			sb.append("history.back();");
-			sb.append("</script>");
-			return sb.toString();
+			return Script.back("수정실패");
 		}
 	}
 }

@@ -1,19 +1,26 @@
 package com.yndg.blog.util;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.servlet.http.HttpServletResponse;
-
 public class Script {
 	
-	public static void href(HttpServletResponse resp, String msg, String uri) throws IOException {
+	public static String href(String msg, String uri) {
 		
-		PrintWriter out = resp.getWriter();
-		out.print("<script>");
-		out.print("alert('"+msg+"');");
-		out.print("location.href='"+uri+"';");
-		out.print("</script>");
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script>");
+		sb.append("alert('"+msg+"');");
+		sb.append("location.href='"+uri+"';");
+		sb.append("</script>");
+		
+		return sb.toString();
 	}
 	
+	public static String back(String msg) {
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script>");
+		sb.append("alert('"+msg+"');");
+		sb.append("history.back();");
+		sb.append("</script>");
+		
+		return sb.toString();
+	}
 }
