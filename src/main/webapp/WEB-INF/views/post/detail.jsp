@@ -13,14 +13,12 @@
 			<p class="card-text">${post.content}</p>
 		</div>
 
-		<div class="card-footer">
-			<c:choose>
-				<c:when test="${sessionScope.principal.id eq post.userId}">
-					<input type="hidden" id="userId" value="${post.userId}" />
-					<button id="post--update--submit" class="btn btn-warning" value="${post.id}">수정</button>
-					<button id="post--delete--submit" class="btn btn-danger" value="${post.id}">삭제</button>
-				</c:when>
-			</c:choose>
+		<div class="card-footer"> 
+			<c:if test='${post.userId eq sessionScope.principal.id }'>
+				<input type="hidden" id="id" value="${post.id}" />
+				<button id="post--update--submit" class="btn btn-warning">수정</button>
+				<button id="post--delete--submit" class="btn btn-danger">삭제</button>
+			</c:if>
 
 			<a href="/" class="btn btn-primary">목록</a>
 		</div>
@@ -107,19 +105,13 @@ $('body').on('click', '#comment--delete--submit', function(){
 });
 
 
-$('#post--delete--submit').on('click', function(){
-	
-	var data = {
-		id : $('#post--delete--submit').val(),
-		userId : $('#userId').val()
-	}
+var id = $('#id').val();
 
+$('#post--delete--submit').on('click', function(){
 	
 	$.ajax({
 		type : 'DELETE',
-		url : '/post/delete/',
-		data : JSON.stringify(data),
-		contentType : 'application/json; charset=utf-8',
+		url : '/post/delete/'+id,
 		dataType :'json'
 		
 	}).done(function(r){
@@ -134,11 +126,9 @@ $('#post--delete--submit').on('click', function(){
 });
 
 $('#post--update--submit').on('click', function(){
-	
-	var id = $('#post--update--submit').val();
-	var userId = $('#userId').val();
-	location.href='/post/update?id='+id+'&userId='+userId;
-	
+		
+	location.href='/post/update/'+id;	 
+		
 });
 </script>
 

@@ -8,7 +8,6 @@
 		<div class="form-group">
 			<label for="title">제목:</label>
 			<input type="text" class="form-control" placeholder="Enter Title" id="title" />
-			<input type="hidden" id="userId" value="${sessionScope.principal.id}"/>
 		</div>
 		
 		<div class="form-group">
@@ -26,8 +25,7 @@ $('#write--submit').on('click', function(){
 	
 	var data ={
 		title : $('#title').val(),
-		content : $('#content').val(),
-		userId : $('#userId').val()	
+		content : $('#content').val()
 	} 
 		
 

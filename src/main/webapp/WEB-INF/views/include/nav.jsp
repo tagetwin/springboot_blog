@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html>
@@ -13,25 +14,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
-<style>
-td{
-	cursor : pointer;
-}
-.comment--item{
-	border-style: solid;
-	background-color: antiquewhite;
-	margin-bottom: 4px;
-}
-
-</style>
+<link rel="stylesheet" href="/css/style.css"/>
 
 
 </head>
 
 <body>
 
-	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+	<nav class="navbar navbar-expand-md bg-success navbar-light">
 		<!-- Brand -->
 		<a class="navbar-brand" href="/">YNDG블로그</a>
 
@@ -57,6 +47,8 @@ td{
 				</c:choose>
 
 			</ul>
+			<img src="/media/${sessionScope.principal.profile}" class="rounded-circle my__img ml-auto" width="30px" height="30px" onerror="javascript:this.src='/images/unknown.png'">
+			
 		</div>
 	</nav>
 	<br />

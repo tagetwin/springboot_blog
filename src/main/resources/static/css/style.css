@@ -1,0 +1,21 @@
+@charset "UTF-8";
+td{
+	cursor : pointer;
+}
+.comment--item{
+	border-style: solid;
+	background-color: antiquewhite;
+	margin-bottom: 4px;
+}
+@media only screen and (max-width:800px){
+	.my__img{
+		display: none;
+	}
+}
+.my__profile{
+	
+	margin-left : 15px;
+	margin-top: 5px;
+	font-size: 15px;
+	
+}

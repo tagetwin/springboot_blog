@@ -21,4 +21,8 @@
 		update user set password = #{password}, profile = #{profile} WHERE id = #{id};
 	</update>
 	
+	<select id="findById" resultType="com.yndg.blog.model.user.User">
+		select id, username, email, profile from user where id = #{id}
+	</select>
+	
 </mapper>

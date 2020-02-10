@@ -1,6 +1,5 @@
 package com.yndg.blog.controller;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,14 +15,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yndg.blog.model.RespCM;
-import com.yndg.blog.model.VM.ListVM;
 import com.yndg.blog.model.post.Post;
-import com.yndg.blog.model.post.dto.ReqDeleteDto;
 import com.yndg.blog.model.post.dto.ReqUpdateDto;
 import com.yndg.blog.model.post.dto.ReqWriteDto;
+import com.yndg.blog.model.post.dto.RespListDto;
 import com.yndg.blog.model.user.User;
 import com.yndg.blog.service.PostService;
 
@@ -43,7 +40,7 @@ public class PostController {
 	@GetMapping({"", "/", "/post"})
 	public String posts(Model model) {
 		
-		List<ListVM> list= postService.글목록();
+		List<RespListDto> list= postService.글목록();
 		model.addAttribute("list", list);
 		
 		return "/post/list"; 
@@ -68,6 +65,9 @@ public class PostController {
 	@PostMapping("/post/write") 	// 인증체크 - 로그인 한사람만 글 작성 가능
 	public ResponseEntity<?> write(@RequestBody ReqWriteDto reqWriteDto) {
 		
+		User principal = (User) session.getAttribute("principal");
+		reqWriteDto.setUserId(principal.getId());
+		
 		int result = postService.작성(reqWriteDto);
 		
 		if(result == 1) {
@@ -77,32 +77,33 @@ public class PostController {
 		}
 	}
 	
-	@GetMapping("/post/update") 	// 인증체크 + 권한 - 로그인 한사람+해당 글을 쓴 사람만 수정 가능
-	public String update(@RequestParam int userId, int id, Model model) {
-		User principal = (User) session.getAttribute("principal");
-		if( principal.getId() == userId) {
-			Post post = postService.수정페이지(id);
-			model.addAttribute("post", post);
-			return "/post/update";
-		}else {
-			return "/post";
-		}
-	}
-	
-	@DeleteMapping("/post/delete/") 	// 인증체크 - 로그인 한사람만 글 삭제 가능 + 해당글은 쓴 사람만 삭제 가능
-	public ResponseEntity<?> delete(@RequestBody ReqDeleteDto reqDeleteDto) throws IOException {
+	@GetMapping("/post/update/{id}") 	// 인증체크 + 권한 - 로그인 한사람+해당 글을 쓴 사람만 수정 가능
+	public String update(@PathVariable int id, Model model) {
 		
-		User principal = (User) session.getAttribute("principal");
-		System.out.println("id: "+principal.getId()+" userId :"+reqDeleteDto.getUserId());
-		if(principal.getId() == reqDeleteDto.getUserId()) {
+			Post post = postService.수정페이지(id);
 			
-			int result = postService.삭제(reqDeleteDto.getId());
-			System.out.println("delete :"+result);
-			if(result == 1) {
-				return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
-			}else {
-				return new ResponseEntity<RespCM>(new RespCM(500, "fail"), HttpStatus.INTERNAL_SERVER_ERROR);
+			if(post != null) {
+				model.addAttribute("post", post);
+				return "post/update";
 			}
+			return "/";
+			
+	}		
+//		Post post = postService.수정페이지(id);
+//		model.addAttribute("post", post);
+//		
+//		return "/post/detail";
+		
+	
+	@DeleteMapping("/post/delete/{id}") 	// 인증체크 - 로그인 한사람만 글 삭제 가능 + 해당글은 쓴 사람만 삭제 가능
+	public ResponseEntity<?> delete(@PathVariable int id) {
+		
+		//동일인 체크 session의 principal.id == 해당 post.id
+		
+		int result = postService.삭제(id);
+		System.out.println("삭제:"+result);
+		if(result == 1) {
+			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
 		}else {
 			return new ResponseEntity<RespCM>(new RespCM(500, "fail"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -111,16 +112,11 @@ public class PostController {
 	@PutMapping("/post/update/") 	// 인증체크 - 로그인 한사람만 글 수정 가능 + 해당글은 쓴 사람만 삭제 가능
 	public ResponseEntity<?> update(@RequestBody ReqUpdateDto reqUpdateDto)  {
 		
-		User principal = (User) session.getAttribute("principal");
-		if(principal.getId() == reqUpdateDto.getUserId()) {
 			
-			int result = postService.수정(reqUpdateDto);
+		int result = postService.수정(reqUpdateDto);
 					
-			if(result == 1) {
-				return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
-			}else {
-				return new ResponseEntity<RespCM>(new RespCM(500, "fail"), HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+		if(result == 1) {
+			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
 		}else {
 			return new ResponseEntity<RespCM>(new RespCM(500, "fail"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}

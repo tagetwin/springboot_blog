@@ -29,8 +29,7 @@ $('#update--submit').on('click', function(){
 		data ={
 			id : no,
 			title : $('#title').val(),
-			content : $('#content').val(),
-			userId : $('#update--submit').val()
+			content : $('#content').val()
 		}
 		
 		$.ajax({
@@ -41,12 +40,11 @@ $('#update--submit').on('click', function(){
 			dataType :'json'
 			
 		}).done(function(r){
-			console.log('수정 성공');
+			alert('수정이 성공하였습니다.');
 			location.href='/post/detail/'+no;	
 			
 		}).fail(function(r){
-			console.log(r);
-			alert('접근이 올바르지 않습니다.');		
+			alert('통신이 실패하였습니다.');		
 			
 		});
 	

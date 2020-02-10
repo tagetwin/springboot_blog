@@ -15,8 +15,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yndg.blog.model.RespCM;
@@ -116,16 +118,29 @@ public class UserController {
 		}
 	}
 	
-	@PostMapping("/user/profile/")
-	public String update(@RequestParam int id, String password,@RequestParam("profile") MultipartFile profile) {
+	// form:form 사용함!!
+	@PutMapping("/user/profile/")
+	public @ResponseBody String profile(@RequestParam int id, @RequestParam String password, @RequestParam MultipartFile profile) {
 		
 		int result = userService.프로필(id, password, profile);
-					
+		System.out.println("result"+result);
+		
+		StringBuffer sb = new StringBuffer();
+		
 		if(result == 1) {
-			return "user/profile";
+			sb.append("<script>");
+			sb.append("alert('수정완료');");
+			sb.append("location.href='/';");
+			sb.append("</script>");
+			return sb.toString();
 		}else {
-			return "post";
+			sb.append("<script>");
+			sb.append("alert('수정실패');");
+			sb.append("history.back();");
+			sb.append("</script>");
+			return sb.toString();
 		}
 	}
 }
+
 

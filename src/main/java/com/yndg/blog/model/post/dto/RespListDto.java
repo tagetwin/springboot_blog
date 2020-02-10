@@ -1,4 +1,4 @@
-package com.yndg.blog.model.VM;
+package com.yndg.blog.model.post.dto;
 
 import java.sql.Timestamp;
 
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ListVM {
+public class RespListDto {
 	private int id;
 	private String title;
 	private String username;

@@ -2,19 +2,19 @@ package com.yndg.blog.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yndg.blog.model.ReturnCode;
-import com.yndg.blog.model.VM.ListVM;
 import com.yndg.blog.model.post.Post;
 import com.yndg.blog.model.post.dto.ReqUpdateDto;
 import com.yndg.blog.model.post.dto.ReqWriteDto;
+import com.yndg.blog.model.post.dto.RespListDto;
+import com.yndg.blog.model.user.User;
 import com.yndg.blog.repository.PostRepository;
-import com.yndg.blog.util.Script;
 
 @Service
 public class PostService {
@@ -23,10 +23,10 @@ public class PostService {
 	private PostRepository postRepository;
 	
 	@Autowired
-	private HttpServletResponse resp;
+	private HttpSession session;
 	
-	public List<ListVM> 글목록(){
-		List<ListVM> list = postRepository.findAllVM();
+	public List<RespListDto> 글목록(){
+		List<RespListDto> list = postRepository.findAllVM();
 		return list;
 	}
 	
@@ -37,20 +37,17 @@ public class PostService {
 	}
 	
 	@Transactional
-	public int 삭제(int id){
-		
-		try {
-			int result  = postRepository.delete(id);
-			System.out.println("PostSevice: "+result);
-			
-			if(result == 1) {
-				return result;
-			}else {
-				return ReturnCode.오류;
-			}
-		} catch (Exception e) {
-			throw new RuntimeException();
-		} 
+	public int 삭제(int id) {
+
+		User principal = (User) session.getAttribute("principal");
+		Post post = postRepository.findById(id);
+
+		if (principal.getId() == post.getUserId()) {
+			return postRepository.delete(id);
+
+		} else {
+			return ReturnCode.오류;
+		}
 	}
 	
 	@Transactional
@@ -72,35 +69,27 @@ public class PostService {
 	@Transactional
 	public Post 수정페이지(int id){
 		
-		try {
-			Post post = postRepository.update(id);
-			
-			if(post != null) {
-				return post;
-			}else {
-				Script.href(resp, "글을 찾을 수 없습니다.", "/post");
-			}
-		} catch (Exception e) {
-			throw new RuntimeException();
+		User principal = (User) session.getAttribute("principal");
+		Post post = postRepository.findById(id);
+		
+		if(principal.getId() == post.getUserId()) {
+			return post;
+		}else {
+			return null;
 		}
-		return null; 
+		
 	}
 	
-	@Transactional
 	public int 수정(ReqUpdateDto reqUpdateDto){
 		
-		try {
-			int result = postRepository.updateProc(reqUpdateDto);
+		User principal= (User) session.getAttribute("principal");
+		Post post = postRepository.findById(reqUpdateDto.getId());
+	
+		if(principal.getId() == post.getUserId()) {
 			
-			if(result == 1) {
-				return result;
-			}else {
-				Script.href(resp, "글을 찾을 수 없습니다.", "/post");
-				return result;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException();
-		}
+			int result = postRepository.updateProc(reqUpdateDto);
+			return result;
+			
+		}	return -1;	
 	}
 }
