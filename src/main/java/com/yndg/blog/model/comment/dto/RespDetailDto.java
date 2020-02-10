@@ -1,26 +1,25 @@
-package com.yndg.blog.model.comment;
+package com.yndg.blog.model.comment.dto;
 
 import java.security.Timestamp;
 
-import lombok.Builder;
+import com.yndg.blog.model.RespCM;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class Comment {
-
+@AllArgsConstructor
+public class RespDetailDto {
+	
+	private RespCM status;
+	
 	private int id;
 	private int userId;
 	private int postId;
 	private String content;
 	private Timestamp createDate;
-	
-	@Builder
-	public Comment(int userId, int postId, String content) {
-		this.userId = userId;
-		this.postId = postId;
-		this.content = content;
-	}
+	private String username;
 	
 }

@@ -2,14 +2,12 @@ package com.yndg.blog.model.post;
 
 import java.security.Timestamp;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Getter
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Post {
 	
 	private int id;
