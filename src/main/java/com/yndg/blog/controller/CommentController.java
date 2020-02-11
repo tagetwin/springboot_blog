@@ -45,7 +45,8 @@ public class CommentController {
 		System.out.println("삭제결과 :"+result);
 		if(result == 1) {
 			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
-		
+		}else if(result == -3) {
+			return new ResponseEntity<RespCM>(new RespCM(403, "fail"), HttpStatus.FORBIDDEN);
 		}else {
 			return new ResponseEntity<RespCM>(new RespCM(400, "fail"), HttpStatus.BAD_REQUEST);
 		}

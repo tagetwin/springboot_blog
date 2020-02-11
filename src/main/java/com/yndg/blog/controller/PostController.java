@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.yndg.blog.model.RespCM;
-import com.yndg.blog.model.comment.Comment;
+import com.yndg.blog.model.comment.dto.RespDetailDto;
 import com.yndg.blog.model.post.Post;
 import com.yndg.blog.model.post.dto.ReqUpdateDto;
 import com.yndg.blog.model.post.dto.ReqWriteDto;
 import com.yndg.blog.model.post.dto.RespListDto;
 import com.yndg.blog.model.user.User;
+import com.yndg.blog.service.CommentService;
 import com.yndg.blog.service.PostService;
 
 // 안녕 시큐리티 구현 완료
@@ -36,6 +37,9 @@ public class PostController {
 	
 	@Autowired
 	private PostService postService;
+	
+	@Autowired
+	private CommentService commentService;
 	
 	
 	@GetMapping({"", "/", "/post"})
@@ -51,7 +55,7 @@ public class PostController {
 	public String detail(@PathVariable int id, Model model) {
 		
 		Post post = postService.상세보기(id);
-		List<Comment> comments = postService.댓글불러오기(id);
+		List<RespDetailDto> comments = commentService.댓글목록보기(id);
 		
 		model.addAttribute("post", post);
 		model.addAttribute("comments", comments);

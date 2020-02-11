@@ -31,11 +31,4 @@
 		UPDATE post SET title = #{title}, content = #{content} WHERE id = #{id};
 	</update>
 	
-	<select id="findByPostId" resultType="com.yndg.blog.model.comment.dto.RespDetailDto">
-		select c.id, u.username, c.content, c.userId
-		from comment c inner join user u
-		on c.userId = u.id
-		where c.postId = #{id} order by c.id desc
-	</select>
-	
 </mapper>

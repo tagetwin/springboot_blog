@@ -50,16 +50,18 @@
 
 			<div id="comment--items" class="card-body">
 				<c:forEach var="comments" items="${comments}">
+				
 					<div id="comment--item--${comments.id}">
 						<ul class="comment--item list-group">
-							<li class="comment--username list-group-item d-flex justify-content-between align-items-center">${comments.username}<c:if
-									test="${comments.userId eq sessionScope.principal.id}">
+							<li class="comment--username list-group-item d-flex justify-content-between align-items-center">${comments.username}
+								<c:if test="${comments.userId eq sessionScope.principal.id}">
 									<span id="del" class="badge badge-danger badge-pill" onclick="commentDelete(${comments.id})">삭제</span>
 								</c:if>
 							</li>
 							<li class="comment--username list-group-item"><span class="comment--content">${comments.content}</span></li>
 						</ul>
 					</div>
+					
 				</c:forEach>
 			</div>
 		</div>

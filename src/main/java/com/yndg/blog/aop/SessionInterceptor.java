@@ -23,7 +23,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			response.sendRedirect("/user/login");
 			return false;
 		}
-		System.out.println("세션 인터셉터 인증 통과");
+//		System.out.println("세션 인터셉터 인증 통과");
 		return true;
 	}
 

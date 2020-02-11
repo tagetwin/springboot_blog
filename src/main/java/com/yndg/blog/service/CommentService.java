@@ -1,12 +1,13 @@
 package com.yndg.blog.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yndg.blog.model.ReturnCode;
-import com.yndg.blog.model.comment.Comment;
 import com.yndg.blog.model.comment.dto.ReqDetailDto;
 import com.yndg.blog.model.comment.dto.RespDetailDto;
 import com.yndg.blog.model.user.User;
@@ -36,16 +37,22 @@ public class CommentService {
 	
 	public int 댓글삭제(int	id) {
 		User principal = (User) session.getAttribute("principal");
-		Comment comment = commentRepository.deleteId(id);
+		RespDetailDto comment = commentRepository.deleteId(id); 
 		
 		if(principal.getId() == comment.getUserId()) {
 			return commentRepository.delete(id);
 		}else {
-			return ReturnCode.오류;
+			return ReturnCode.오류; 
 		}
 		
 	}
 	
+	public List<RespDetailDto> 댓글목록보기(int postId) {
+		
 
+		return commentRepository.findByPostId(postId);
+		
+		
+	}
 	
 }

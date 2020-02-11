@@ -47,7 +47,7 @@
 				</c:choose>
 
 			</ul>
-			<img src="/media/${sessionScope.principal.profile}" class="rounded-circle my__img ml-auto" width="30px" height="30px" onerror="javascript:this.src='/images/unknown.png'">
+			<img src="/media/${sessionScope.principal.profile}" class="rounded-circle my__img ml-auto" width="40px" height="40px" onerror="javascript:this.src='/images/unknown.png'">
 			
 		</div>
 	</nav>

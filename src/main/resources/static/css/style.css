@@ -3,7 +3,7 @@ td{
 	cursor : pointer;
 }
 .comment--item{
-	border-style: solid;
+	border-style: solid 0.7px;
 	background-color: antiquewhite;
 	margin-bottom: 4px;
 }

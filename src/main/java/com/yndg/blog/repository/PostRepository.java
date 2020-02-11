@@ -2,7 +2,6 @@ package com.yndg.blog.repository;
 
 import java.util.List;
 
-import com.yndg.blog.model.comment.Comment;
 import com.yndg.blog.model.post.Post;
 import com.yndg.blog.model.post.dto.ReqUpdateDto;
 import com.yndg.blog.model.post.dto.ReqWriteDto;
@@ -28,7 +27,7 @@ public interface PostRepository {
 	// 글 등록
 	int save(ReqWriteDto reqWriteDto);
 
-	// 댓글 불러오기
-	public List<Comment> findByPostId(int id);
+//	// 댓글 불러오기
+//	public List<Comment> findByPostId(int id);
 
 }

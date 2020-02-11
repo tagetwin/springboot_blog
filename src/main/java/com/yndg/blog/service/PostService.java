@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yndg.blog.model.ReturnCode;
-import com.yndg.blog.model.comment.Comment;
 import com.yndg.blog.model.post.Post;
 import com.yndg.blog.model.post.dto.ReqUpdateDto;
 import com.yndg.blog.model.post.dto.ReqWriteDto;
@@ -92,12 +91,5 @@ public class PostService {
 			return result;
 			
 		}	return -1;	
-	}
-	
-	public List<Comment> 댓글불러오기(int id) {
-		
-		List<Comment> comments = postRepository.findByPostId(id);
-		return comments;
-			
 	}
 }
