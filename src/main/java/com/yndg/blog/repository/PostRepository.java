@@ -11,7 +11,7 @@ import com.yndg.blog.model.post.dto.RespListDto;
 public interface PostRepository {
 
 	// 전체보기
-	List<RespListDto> findAllVM();
+	List<RespListDto> findAllVM(Pagination pagination);
 	
 	// 상세보기
 	Post findById(int id);
@@ -29,7 +29,7 @@ public interface PostRepository {
 	int save(ReqWriteDto reqWriteDto);
 
 	// 글 전체개수 불러오기
-	int getBoardListCnt(Pagination pagination);
+	int getBoardListCnt();
 	
 	// 글 한 페이지 불러오기
 	List<Post> getBoardList(int startList, int listSize);

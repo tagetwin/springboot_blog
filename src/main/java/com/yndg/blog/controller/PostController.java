@@ -43,11 +43,11 @@ public class PostController {
 	public String posts(Model model, @RequestParam(required = false, defaultValue = "1") int page,
 			@RequestParam(required = false, defaultValue = "1") int range) {
 		
-		List<RespListDto> list= postService.글목록(pagination);
-		
 		int listCnt = postService.게시글수();
 		Pagination pagination = new Pagination();
 		pagination.pageInfo(page, range, listCnt);
+		
+		List<RespListDto> list= postService.글목록(pagination);
 		model.addAttribute("pagination", pagination);
 		
 		model.addAttribute("list", list);

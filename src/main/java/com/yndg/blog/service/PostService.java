@@ -21,9 +21,8 @@ public class PostService {
 	@Autowired
 	private PostRepository postRepository;
 	
-	
 	public List<RespListDto> 글목록(Pagination pagination){
-		List<RespListDto> list = postRepository.findAllVM();
+		List<RespListDto> list = postRepository.findAllVM(pagination);
 		return list;
 	}
 	
@@ -88,14 +87,6 @@ public class PostService {
 	}
 	
 	public int 게시글수(){
-		System.out.println(postRepository.getBoardListCnt());
 		return postRepository.getBoardListCnt();
- 
-	}
-	
-	public List<Post> 한페이지(int startList, int listSize){
-
-		return postRepository.getBoardList(startList, listSize);
- 
 	}
 }

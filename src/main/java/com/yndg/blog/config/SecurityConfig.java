@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 
 		http.authorizeRequests() // request 요청을
-				.antMatchers("/user/profile", "/post/write/**", "/post/detail/**", "/post/delete/**", "/post/update/**") // 이
+				.antMatchers("/user/profile", "/post/write/**", "/post/delete/**", "/post/update/**") // 이
 																															// 주소는
 																															// .
 																															// 인증해야한다.
@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.formLogin()
 				.loginPage("/user/login")
 				.loginProcessingUrl("/user/login") // post 만 낚아챔
-//				.defaultSuccessUrl("/") // successHandler를 사용할 수 있음
+				.defaultSuccessUrl("/") // successHandler를 사용할 수 있음
 				.successHandler(new AuthenticationSuccessHandler() {
 
 					@Override
@@ -88,10 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						System.out.println(exception.getMessage());
 						System.out.println("failhandler");
 					}
-				})
-
-		;
-		System.out.println("1234");
+				});
 	}
 
 }

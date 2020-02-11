@@ -9,6 +9,7 @@
 		from post p inner join user u
 		on p.userId = u.id
 		order by p.id desc
+		LIMIT #{startList}, #{listSize}
 	</select>
 	
 	<select id="findById" resultType="com.yndg.blog.model.post.Post">  
@@ -30,10 +31,6 @@
 	<update id="updateProc" >
 		UPDATE post SET title = #{title}, content = #{content} WHERE id = #{id};
 	</update>
-	
-	<select id="getBoardList" resultType="com.yndg.blog.model.post.Post">
-		SELECT * FROM post LIMIT #{startList}, #{listSize}
-	</select>
 	
 	<select id="getBoardListCnt" resultType="int">
 		SELECT count(*) as listCnt FROM post
