@@ -2,12 +2,11 @@ package com.yndg.blog.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yndg.blog.model.Pagination;
 import com.yndg.blog.model.ReturnCode;
 import com.yndg.blog.model.post.Post;
 import com.yndg.blog.model.post.dto.ReqUpdateDto;
@@ -22,10 +21,8 @@ public class PostService {
 	@Autowired
 	private PostRepository postRepository;
 	
-	@Autowired
-	private HttpSession session;
 	
-	public List<RespListDto> 글목록(){
+	public List<RespListDto> 글목록(Pagination pagination){
 		List<RespListDto> list = postRepository.findAllVM();
 		return list;
 	}
@@ -37,9 +34,8 @@ public class PostService {
 	}
 	
 	@Transactional
-	public int 삭제(int id) {
+	public int 삭제(int id, User principal) {
 
-		User principal = (User) session.getAttribute("principal");
 		Post post = postRepository.findById(id);
 
 		if (principal.getId() == post.getUserId()) {
@@ -67,9 +63,8 @@ public class PostService {
 	}
 	
 	@Transactional
-	public Post 수정페이지(int id){
+	public Post 수정페이지(int id, User principal){
 		
-		User principal = (User) session.getAttribute("principal");
 		Post post = postRepository.findById(id);
 		
 		if(principal.getId() == post.getUserId()) {
@@ -80,9 +75,8 @@ public class PostService {
 		
 	}
 	
-	public int 수정(ReqUpdateDto reqUpdateDto){
+	public int 수정(ReqUpdateDto reqUpdateDto, User principal){
 		
-		User principal= (User) session.getAttribute("principal");
 		Post post = postRepository.findById(reqUpdateDto.getId());
 	
 		if(principal.getId() == post.getUserId()) {
@@ -91,5 +85,17 @@ public class PostService {
 			return result;
 			
 		}	return -1;	
+	}
+	
+	public int 게시글수(){
+		System.out.println(postRepository.getBoardListCnt());
+		return postRepository.getBoardListCnt();
+ 
+	}
+	
+	public List<Post> 한페이지(int startList, int listSize){
+
+		return postRepository.getBoardList(startList, listSize);
+ 
 	}
 }

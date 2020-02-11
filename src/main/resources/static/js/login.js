@@ -13,15 +13,22 @@ $('#login--submit').on('click', function() {
 	$.ajax({
 		type : 'POST', // 로그인만 예외로 POST. GET을 쓰면 주소에 남기때문에
 		url : '/user/login',
-		data : JSON.stringify(data),
-		contentType : 'application/json; charset=utf-8',
+		data : data,
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		dataType : 'json'
 
 	}).done(function(r) {
-		alert('로그인 성공');
-		location.href = "/"
+		if(r.statusCode == 200){
+			console.log(r);
+			alert('로그인 성공');
+			location.href = "/"
+		}else{
+			console.log(r);
+			alert('로그인 실패');
+		}
 
 	}).fail(function(r) {
+		console.log(r);
 		alert('로그인 실패');
 
 	});

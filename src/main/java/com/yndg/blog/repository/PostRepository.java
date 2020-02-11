@@ -2,6 +2,7 @@ package com.yndg.blog.repository;
 
 import java.util.List;
 
+import com.yndg.blog.model.Pagination;
 import com.yndg.blog.model.post.Post;
 import com.yndg.blog.model.post.dto.ReqUpdateDto;
 import com.yndg.blog.model.post.dto.ReqWriteDto;
@@ -27,7 +28,10 @@ public interface PostRepository {
 	// 글 등록
 	int save(ReqWriteDto reqWriteDto);
 
-//	// 댓글 불러오기
-//	public List<Comment> findByPostId(int id);
-
+	// 글 전체개수 불러오기
+	int getBoardListCnt(Pagination pagination);
+	
+	// 글 한 페이지 불러오기
+	List<Post> getBoardList(int startList, int listSize);
+	
 }

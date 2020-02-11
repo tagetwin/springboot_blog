@@ -33,7 +33,7 @@ $('#join--submit').on('click', function(){
 					$('#username_check').append('<small>'+r.msg+'</small>');
 // 					alert('아이디가 중복되었습니다.');	
 				}
-// 				alert('회원가입 실패');
+ 				alert('회원가입 실패');
 				
 			}
 			
@@ -54,7 +54,7 @@ $('#join--submit').on('click', function(){
 			if(check.email != null){
 				$('#email_check').append('<small>'+check.email+'</small>');
 			}
-			
+			alert('서버오류');
 		});
 
 		

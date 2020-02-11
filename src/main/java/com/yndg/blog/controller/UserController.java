@@ -3,12 +3,12 @@ package com.yndg.blog.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -25,7 +25,6 @@ import com.yndg.blog.model.RespCM;
 import com.yndg.blog.model.ReturnCode;
 import com.yndg.blog.model.user.User;
 import com.yndg.blog.model.user.dto.ReqJoinDto;
-import com.yndg.blog.model.user.dto.ReqLoginDto;
 import com.yndg.blog.service.UserService;
 import com.yndg.blog.util.Script;
 
@@ -36,10 +35,6 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private HttpSession session;
-	
 	
 	@GetMapping("/user/join")
 	public String join() {
@@ -52,19 +47,18 @@ public class UserController {
 		return "/user/login";
 	}
 	
-	@GetMapping("/user/logout")
-	public String logout() {
-		
-		session.invalidate();
-		
-		return "redirect:/";
-	}
+//	@GetMapping("/user/logout")
+//	public String logout() {
+//		
+//		session.invalidate();
+//		
+//		return "redirect:/";
+//	}
 	
 	// 인증, 동일인 체크(권한?) 스크립트가 안된다?
 	@GetMapping("/user/profile/{id}")
-	public String profile(@PathVariable int id) {
+	public String profile(@PathVariable int id, @AuthenticationPrincipal User principal) {
 		
-		User principal = (User) session.getAttribute("principal");
 		
 		if(principal.getId() == id) {
 			return "/user/profile";
@@ -103,27 +97,11 @@ public class UserController {
 		}
 	}
 	
-	
-	@PostMapping("/user/login") // 컨트롤러의 매개변수는 autowired 톰캣의 객체는 springcontext에서 들고 있다.
-	public ResponseEntity<?> login(@Valid @RequestBody ReqLoginDto dto, BindingResult bindingResult) {
-
-		// request 검증 = AOP 로 처리할 예정
-		// 서비스 호출
-		User principal = userService.로그인(dto);
-		if(principal != null) {
-			session.setAttribute("principal", principal);
-			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
-		}else {
-			return new ResponseEntity<RespCM>(new RespCM(400, "fail"), HttpStatus.BAD_REQUEST);
-			
-		}
-	}
-	
 	// form:form 사용함!!
 	@PutMapping("/user/profile/")
-	public @ResponseBody String profile(@RequestParam int id, @RequestParam String password, @RequestParam MultipartFile profile) {
+	public @ResponseBody String profile(@RequestParam int id, @RequestParam String password, @RequestParam MultipartFile profile, @AuthenticationPrincipal User principal) {
 		
-		int result = userService.프로필(id, password, profile);
+		int result = userService.프로필(id, password, profile, principal);
 		System.out.println("result"+result);
 		
 		if(result == 1) {

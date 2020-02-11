@@ -3,6 +3,7 @@ package com.yndg.blog.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yndg.blog.model.RespCM;
 import com.yndg.blog.model.comment.dto.ReqDetailDto;
 import com.yndg.blog.model.comment.dto.RespDetailDto;
+import com.yndg.blog.model.user.User;
 import com.yndg.blog.service.CommentService;
 
 
@@ -21,7 +23,6 @@ public class CommentController {
 
 	@Autowired
 	private CommentService commentService;
-	
 	
 	@PostMapping("/comment/write")
 	public ResponseEntity<?> write(@RequestBody ReqDetailDto dto) {
@@ -40,8 +41,8 @@ public class CommentController {
 	}
 	
 	@DeleteMapping("/comment/delete/{id}")
-	public ResponseEntity<?> write(@PathVariable int id) {
-		int result = commentService.댓글삭제(id);
+	public ResponseEntity<?> write(@PathVariable int id, @AuthenticationPrincipal User principal) {
+		int result = commentService.댓글삭제(id, principal);
 		System.out.println("삭제결과 :"+result);
 		if(result == 1) {
 			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
