@@ -23,6 +23,18 @@ $('#write--submit').on('click', function() {
 
 	}).fail(function(r) {
 		console.log(r);
+		
+		var check = r.responseJSON;
+		
+		console.log(check.title);
+		if(check.title != null){
+			$('#title_check').append(`<small>${check.title}</small>`)
+		}
+		if(check.title != null){
+			$('#content_check').append(`<small>${check.content}</small>`)
+		}
+		
+		
 		console.log('통신실패');
 
 	});

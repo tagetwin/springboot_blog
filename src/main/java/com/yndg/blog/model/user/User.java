@@ -5,6 +5,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +20,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class User implements UserDetails{
 	private int id;
+	@NotBlank(message = "username 입력하세요")
+	@NotEmpty
 	private String username;
+	@NotBlank(message = "password 입력하세요")
+	@NotEmpty
 	private String password;
 	private String email;
 	private String profile;

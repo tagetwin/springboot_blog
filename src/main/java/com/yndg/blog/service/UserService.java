@@ -22,6 +22,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private MyUserDetailService userDetailService;
 
 	@Value("${file.path}")
 	private String fileRealPath; // 서버에 배포하면 경로 변경해야함.
@@ -49,14 +52,8 @@ public class UserService {
 		}
 	}
 	
-	
-//	public User 로그인(ReqLoginDto dto) {
-//		return userRepository.findByUsernameAndPassword(dto);
-//		
-//	}
-	
 	@Transactional
-	public int 프로필(int id, String password, MultipartFile profile, User principal) {
+	public int 프로필(int id, String password, MultipartFile profile) {
 
 		UUID uuid = UUID.randomUUID();
 		String uuidFilename = uuid + "_" + profile.getOriginalFilename();
@@ -65,15 +62,17 @@ public class UserService {
 		Path filePath = Paths.get(fileRealPath+uuidFilename);
 		
 		System.out.println(uuidFilename);
+		
+		User principal = userDetailService.getPrincipal();
+		
 		try {
 			
 			String encodePassword = passwordEncode.encode(password);
 			int result = userRepository.update(id, encodePassword, uuidFilename);
 			
-//			int result = userRepository.update(id, password, uuidFilename);
 			Files.write(filePath, profile.getBytes());
 			User user = userRepository.findById(id);
-//			session.setAttribute("principal", user);
+			
 			principal.setPassword(user.getPassword());
 			principal.setEmail(user.getEmail());
 			principal.setProfile(user.getProfile());
