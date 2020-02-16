@@ -10,19 +10,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.yndg.blog.model.Pagination;
+import com.yndg.blog.model.Criteria;
+import com.yndg.blog.model.PageMaker;
 import com.yndg.blog.model.RespCM;
 import com.yndg.blog.model.comment.dto.RespDetailDto;
 import com.yndg.blog.model.post.Post;
 import com.yndg.blog.model.post.dto.ReqUpdateDto;
 import com.yndg.blog.model.post.dto.ReqWriteDto;
-import com.yndg.blog.model.post.dto.RespListDto;
 import com.yndg.blog.model.user.User;
 import com.yndg.blog.service.CommentService;
 import com.yndg.blog.service.PostService;
@@ -39,30 +40,29 @@ public class PostController {
 	@Autowired
 	private CommentService commentService;
 	
+	
 	@GetMapping({"", "/", "/post"})
-	public String posts(Model model, @RequestParam(required = false, defaultValue = "1") int page,
-			@RequestParam(required = false, defaultValue = "1") int range) {
+	public String posts(Model model, @ModelAttribute("cri") Criteria cri) {
 		
-		int listCnt = postService.게시글수();
-		Pagination pagination = new Pagination();
-		pagination.pageInfo(page, range, listCnt);
-		
-		List<RespListDto> list= postService.글목록(pagination);
-		model.addAttribute("pagination", pagination);
-		
-		model.addAttribute("list", list);
+		int totalPage = postService.게시글수(cri);
+		PageMaker pm = new PageMaker();
+		pm.setCri(cri);
+		pm.setTotalCount(totalPage);
+		int page = cri.getPage();
+		int perPageNum = cri.getPerPageNum();
+		cri.setStartPage((page-1)*perPageNum);
+		model.addAttribute("pageMaker", pm);
+		model.addAttribute("list", postService.글목록(cri));
 		
 		return "/post/list"; 
 	}
 	
-	@GetMapping("/post/detail/{id}")
-	public String detail(@PathVariable int id, Model model) {
+	@GetMapping("/post/detail")
+	public String detail(@RequestParam("id") int id, Model model, @ModelAttribute("cri2") Criteria cri) {
 		Post post = postService.상세보기(id);
 		List<RespDetailDto> comments = commentService.댓글목록보기(id);
-		
 		model.addAttribute("post", post);
 		model.addAttribute("comments", comments);
-		
 		return "/post/detail";
 	}
 	

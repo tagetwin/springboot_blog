@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.yndg.blog.model.Pagination;
+import com.yndg.blog.model.Criteria;
 import com.yndg.blog.model.ReturnCode;
 import com.yndg.blog.model.post.Post;
 import com.yndg.blog.model.post.dto.ReqUpdateDto;
@@ -21,8 +21,8 @@ public class PostService {
 	@Autowired
 	private PostRepository postRepository;
 	
-	public List<RespListDto> 글목록(Pagination pagination){
-		List<RespListDto> list = postRepository.findAllVM(pagination);
+	public List<RespListDto> 글목록(Criteria cri){
+		List<RespListDto> list = postRepository.findAllVM(cri);
 		return list;
 	}
 	
@@ -86,7 +86,7 @@ public class PostService {
 		}	return -1;	
 	}
 	
-	public int 게시글수(){
-		return postRepository.getBoardListCnt();
+	public int 게시글수(Criteria cri){
+		return postRepository.getBoardListCnt(cri);
 	}
 }

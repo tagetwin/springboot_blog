@@ -15,13 +15,13 @@
 
 		<div class="card-footer d-flex">
 			<input type="hidden" id="id" value="${post.id}" />
-			<c:if test='${post.userId eq principal.id }'>
+			<c:if test='${post.userId eq principal.id}'>
 
 				<button id="post--update--submit" class="btn btn-warning">수정</button>
 				<button id="post--delete--submit" class="btn btn-danger ml-3">삭제</button>
 			</c:if>
 			<div class="ml-auto">
-				<a href="/" class="btn btn-primary">목록</a>
+				<a href="/post?page=${cri2.page}" class="btn btn-primary">목록</a>
 			</div>
 		</div>
 	</div>
@@ -66,6 +66,8 @@
 			</div>
 		</div>
 	</div>
+<%-- 	<input type="hidden" id="page" value="${pagination.page}" /> --%>
+<%-- 	<input type="hidden" id="range" value="${pagination.range}" /> --%>
 </div>
 
 <script src="/js/detail.js"></script>
