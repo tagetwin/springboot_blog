@@ -26,11 +26,6 @@ import com.yndg.blog.model.comment.dto.RespDetailDto;
 import com.yndg.blog.model.post.Post;
 import com.yndg.blog.model.post.dto.ReqUpdateDto;
 import com.yndg.blog.model.post.dto.ReqWriteDto;
-<<<<<<< HEAD
-import com.yndg.blog.model.user.User;
-=======
-import com.yndg.blog.model.post.dto.RespListDto;
->>>>>>> 166ee0f072a342b28d4103f27ab9ad07b503371e
 import com.yndg.blog.service.CommentService;
 import com.yndg.blog.service.PostService;
 
