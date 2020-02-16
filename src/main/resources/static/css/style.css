@@ -22,3 +22,10 @@ td{
 #del{
 	cursor: pointer;
 }
+#title_check, #password_check, #username_check ,#email_check {
+	
+	display: inline;
+	font-style: italic;
+	color: red;
+	margin-left: 5px;
+}

@@ -30,6 +30,16 @@ $('#login--submit').on('click', function() {
 	}).fail(function(r) {
 		console.log(r);
 		alert('로그인 실패');
+		
+		var check =r.responseJSON;
+		
+		if(check.username != null){
+			$('#username_check').append('<small>'+check.username+'</small>');
+		}
+
+		if(check.password != null){
+			$('#password_check').append('<small>'+check.password+'</small>');	
+		}
 
 	});
 })

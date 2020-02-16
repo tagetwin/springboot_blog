@@ -2,12 +2,14 @@ package com.yndg.blog.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,7 +26,11 @@ import com.yndg.blog.model.comment.dto.RespDetailDto;
 import com.yndg.blog.model.post.Post;
 import com.yndg.blog.model.post.dto.ReqUpdateDto;
 import com.yndg.blog.model.post.dto.ReqWriteDto;
+<<<<<<< HEAD
 import com.yndg.blog.model.user.User;
+=======
+import com.yndg.blog.model.post.dto.RespListDto;
+>>>>>>> 166ee0f072a342b28d4103f27ab9ad07b503371e
 import com.yndg.blog.service.CommentService;
 import com.yndg.blog.service.PostService;
 
@@ -74,9 +80,7 @@ public class PostController {
 	
 	
 	@PostMapping("/post/write") 	// 인증체크 - 로그인 한사람만 글 작성 가능
-	public ResponseEntity<?> write(@RequestBody ReqWriteDto reqWriteDto, @AuthenticationPrincipal User principal ) {
-		
-		reqWriteDto.setUserId(principal.getId());
+	public ResponseEntity<?> write(@Valid @RequestBody ReqWriteDto reqWriteDto, BindingResult bindingResult) {
 		
 		int result = postService.작성(reqWriteDto);
 		
@@ -88,9 +92,9 @@ public class PostController {
 	}
 	
 	@GetMapping("/post/update/{id}") 	// 인증체크 + 권한 - 로그인 한사람+해당 글을 쓴 사람만 수정 가능
-	public String update(@PathVariable int id, Model model, @AuthenticationPrincipal User principal) {
+	public String update(@PathVariable int id, Model model) {
 		
-			Post post = postService.수정페이지(id, principal);
+			Post post = postService.수정페이지(id);
 			
 			if(post != null) {
 				model.addAttribute("post", post);
@@ -101,11 +105,11 @@ public class PostController {
 	}		
 	
 	@DeleteMapping("/post/delete/{id}") 	// 인증체크 - 로그인 한사람만 글 삭제 가능 + 해당글은 쓴 사람만 삭제 가능
-	public ResponseEntity<?> delete(@PathVariable int id, @AuthenticationPrincipal User principal) {
+	public ResponseEntity<?> delete(@PathVariable int id) {
 		
 		//동일인 체크 session의 principal.id == 해당 post.id
 		
-		int result = postService.삭제(id, principal);
+		int result = postService.삭제(id); 
 		System.out.println("삭제:"+result);
 		if(result == 1) {
 			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
@@ -115,9 +119,9 @@ public class PostController {
 	}
 	
 	@PutMapping("/post/update/") 	// 인증체크 - 로그인 한사람만 글 수정 가능 + 해당글은 쓴 사람만 삭제 가능
-	public ResponseEntity<?> update(@RequestBody ReqUpdateDto reqUpdateDto, @AuthenticationPrincipal User principal)  {
+	public ResponseEntity<?> update(@RequestBody ReqUpdateDto reqUpdateDto)  {
 			
-		int result = postService.수정(reqUpdateDto, principal);
+		int result = postService.수정(reqUpdateDto);
 					
 		if(result == 1) {
 			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);

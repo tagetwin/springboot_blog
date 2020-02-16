@@ -6,12 +6,12 @@
 
 	<form>
 		<div class="form-group">
-			<label for="title">제목:</label>
+			<label for="title">제목:</label><div id="title_check"></div>
 			<input type="text" class="form-control" placeholder="Enter Title" id="title" />
 		</div>
 		
 		<div class="form-group">
-			<label for="content">내용:</label>
+			<label for="content">내용:</label><div id="content_check"></div>
 			<textarea class="form-control" rows="5" id="content"></textarea>
 		</div>
 	</form>

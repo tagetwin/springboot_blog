@@ -1,8 +1,5 @@
 package com.yndg.blog.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,18 +43,9 @@ public class UserController {
 		return "/user/login";
 	}
 	
-//	@GetMapping("/user/logout")
-//	public String logout() {
-//		
-//		session.invalidate();
-//		
-//		return "redirect:/";
-//	}
-	
 	// 인증, 동일인 체크(권한?) 스크립트가 안된다?
 	@GetMapping("/user/profile/{id}")
 	public String profile(@PathVariable int id, @AuthenticationPrincipal User principal) {
-		
 		
 		if(principal.getId() == id) {
 			return "/user/profile";
@@ -75,17 +62,6 @@ public class UserController {
 		// 한글뱉어내기 어노테이션에서 없으면
 //		errorMap.put("username", "한글입력불가");
 		
-		
-		if(bindingResult.hasErrors()) {
-			Map<String, String> errorMap = new HashMap<>();
-			
-			for(FieldError error : bindingResult.getFieldErrors()) {
-				errorMap.put(error.getField(), error.getDefaultMessage());
-			}
-			
-			return new ResponseEntity<Map<String, String>>(errorMap, HttpStatus.BAD_REQUEST);
-		}
-		
 		int result = userService.회원가입(dto);
 		
 		if(result == -2) {
@@ -99,9 +75,12 @@ public class UserController {
 	
 	// form:form 사용함!!
 	@PutMapping("/user/profile/")
-	public @ResponseBody String profile(@RequestParam int id, @RequestParam String password, @RequestParam MultipartFile profile, @AuthenticationPrincipal User principal) {
+	public @ResponseBody String profile(
+			@RequestParam int id,
+			@RequestParam String password,
+			@RequestParam MultipartFile profile) {
 		
-		int result = userService.프로필(id, password, profile, principal);
+		int result = userService.프로필(id, password, profile);
 		System.out.println("result"+result);
 		
 		if(result == 1) {

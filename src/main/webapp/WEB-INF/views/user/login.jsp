@@ -6,12 +6,12 @@
 
 	<form>
 		<div class="form-group">
-			<label for="username">유저네임:</label>
-			<input type="text" class="form-control" placeholder="Enter username" id="username" />
+			<label for="username">유저네임:</label><div id="username_check"></div>
+			<input type="text" class="form-control" placeholder="Enter username" id="username"/>
 		</div>
 		
 		<div class="form-group">
-			<label for="password">패스워드:</label>
+			<label for="password">패스워드:</label><div id="password_check"></div>
 			<input type="password" class="form-control" placeholder="Enter password" id="password" />
 		</div>
 		

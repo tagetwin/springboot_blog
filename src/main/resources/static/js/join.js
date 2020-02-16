@@ -54,7 +54,7 @@ $('#join--submit').on('click', function(){
 			if(check.email != null){
 				$('#email_check').append('<small>'+check.email+'</small>');
 			}
-			alert('서버오류');
+			alert('회원가입 실패');
 		});
 
 		
