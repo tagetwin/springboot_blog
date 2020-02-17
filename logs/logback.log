@@ -65,3 +65,6 @@
 [2020-02-12 10:50:57:5208771][http-nio-8080-exec-8] WARN  c.yndg.blog.aop.warn.BindingAdvice - com.yndg.blog.controller.UserController.join() => 필드 : password 경고 : 패스워드를 입력하세요.
 [2020-02-12 10:50:57:5208771][http-nio-8080-exec-8] WARN  c.yndg.blog.aop.warn.BindingAdvice - com.yndg.blog.controller.UserController.join() => 필드 : username 경고 : 유저네임을 입력하세요.
 [2020-02-12 10:50:57:5208771][http-nio-8080-exec-8] WARN  c.yndg.blog.aop.warn.BindingAdvice - com.yndg.blog.controller.UserController.join() => 필드 : email 경고 : 이메일을 입력하세요.
+[2020-02-12 13:29:54:636915][http-nio-8080-exec-7] WARN  c.yndg.blog.aop.warn.BindingAdvice - com.yndg.blog.controller.UserController.join() => 필드 : email 경고 : 이메일을 입력하세요.
+[2020-02-12 13:29:54:636915][http-nio-8080-exec-7] WARN  c.yndg.blog.aop.warn.BindingAdvice - com.yndg.blog.controller.UserController.join() => 필드 : password 경고 : 패스워드를 입력하세요.
+[2020-02-12 13:29:54:636915][http-nio-8080-exec-7] WARN  c.yndg.blog.aop.warn.BindingAdvice - com.yndg.blog.controller.UserController.join() => 필드 : username 경고 : 유저네임을 입력하세요.
