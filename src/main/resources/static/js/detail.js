@@ -64,8 +64,6 @@ function commentDelete(commentId){
 
 };
 
-
-
 $('body').on('click', '#comment--delete--submit', function(){
 	alert('댓글 삭제');
 });

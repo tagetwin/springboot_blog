@@ -22,7 +22,6 @@ public class CommentController {
 	@Autowired
 	private CommentService commentService;
 	
-	
 	@PostMapping("/comment/write")
 	public ResponseEntity<?> write(@RequestBody ReqDetailDto dto) {
 		RespDetailDto comment = commentService.댓글쓰기(dto);

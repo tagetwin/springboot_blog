@@ -7,8 +7,8 @@
 	<form:form action="/user/profile/" method="PUT" enctype="multipart/form-data">
 		<div class="form-group">
 			<label for=username>유저네임:</label>
-			<input type="text" class="form-control" placeholder="Enter Username" value="${sessionScope.principal.username}" readonly="readonly"/>
-			<input type="hidden" class="form-control" name="id" value="${sessionScope.principal.id}" />
+			<input type="text" class="form-control" placeholder="Enter Username" value="${principal.username}" readonly="readonly"/>
+			<input type="hidden" class="form-control" name="id" value="${principal.id}" />
 		</div>
 		
 		<div class="form-group">
@@ -18,13 +18,13 @@
 		
 		<div class="form-group">
 			<label for="email">이메일:</label>
-			<input type="email" class="form-control" placeholder="Enter Email" value="${sessionScope.principal.email}" readonly="readonly"/>
+			<input type="email" class="form-control" placeholder="Enter Email" value="${principal.email}" readonly="readonly"/>
 		</div>
 		
 		<div class="form-group">
 			<label for="profile">프로필 사진:</label>
 			<input type="file" class="form-control" name="profile" id="input_img"/>
-			<p class="my__profile">${sessionScope.principal.profile}</p>
+			<p class="my__profile">${principal.profile}</p>
 			<div class="img_wrap">
 				<img id="img" width="150px"/>
 			</div>

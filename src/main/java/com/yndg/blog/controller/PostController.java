@@ -2,27 +2,30 @@ package com.yndg.blog.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.yndg.blog.model.Criteria;
+import com.yndg.blog.model.PageMaker;
 import com.yndg.blog.model.RespCM;
 import com.yndg.blog.model.comment.dto.RespDetailDto;
 import com.yndg.blog.model.post.Post;
 import com.yndg.blog.model.post.dto.ReqUpdateDto;
 import com.yndg.blog.model.post.dto.ReqWriteDto;
-import com.yndg.blog.model.post.dto.RespListDto;
-import com.yndg.blog.model.user.User;
 import com.yndg.blog.service.CommentService;
 import com.yndg.blog.service.PostService;
 
@@ -33,9 +36,6 @@ import com.yndg.blog.service.PostService;
 public class PostController {
 	
 	@Autowired
-	private HttpSession session;
-	
-	@Autowired
 	private PostService postService;
 	
 	@Autowired
@@ -43,23 +43,27 @@ public class PostController {
 	
 	
 	@GetMapping({"", "/", "/post"})
-	public String posts(Model model) {
+	public String posts(Model model, @ModelAttribute("cri") Criteria cri) {
 		
-		List<RespListDto> list= postService.글목록();
-		model.addAttribute("list", list);
+		int totalPage = postService.게시글수(cri);
+		PageMaker pm = new PageMaker();
+		pm.setCri(cri);
+		pm.setTotalCount(totalPage);
+		int page = cri.getPage();
+		int perPageNum = cri.getPerPageNum();
+		cri.setStartPage((page-1)*perPageNum);
+		model.addAttribute("pageMaker", pm);
+		model.addAttribute("list", postService.글목록(cri));
 		
 		return "/post/list"; 
 	}
 	
-	@GetMapping("/post/detail/{id}")
-	public String detail(@PathVariable int id, Model model) {
-		
+	@GetMapping("/post/detail")
+	public String detail(@RequestParam("id") int id, Model model, @ModelAttribute("cri") Criteria cri) {
 		Post post = postService.상세보기(id);
 		List<RespDetailDto> comments = commentService.댓글목록보기(id);
-		
 		model.addAttribute("post", post);
 		model.addAttribute("comments", comments);
-		
 		return "/post/detail";
 	}
 	
@@ -71,10 +75,7 @@ public class PostController {
 	
 	
 	@PostMapping("/post/write") 	// 인증체크 - 로그인 한사람만 글 작성 가능
-	public ResponseEntity<?> write(@RequestBody ReqWriteDto reqWriteDto) {
-		
-		User principal = (User) session.getAttribute("principal");
-		reqWriteDto.setUserId(principal.getId());
+	public ResponseEntity<?> write(@Valid @RequestBody ReqWriteDto reqWriteDto, BindingResult bindingResult) {
 		
 		int result = postService.작성(reqWriteDto);
 		
@@ -103,7 +104,7 @@ public class PostController {
 		
 		//동일인 체크 session의 principal.id == 해당 post.id
 		
-		int result = postService.삭제(id);
+		int result = postService.삭제(id); 
 		System.out.println("삭제:"+result);
 		if(result == 1) {
 			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
@@ -114,7 +115,6 @@ public class PostController {
 	
 	@PutMapping("/post/update/") 	// 인증체크 - 로그인 한사람만 글 수정 가능 + 해당글은 쓴 사람만 삭제 가능
 	public ResponseEntity<?> update(@RequestBody ReqUpdateDto reqUpdateDto)  {
-		
 			
 		int result = postService.수정(reqUpdateDto);
 					

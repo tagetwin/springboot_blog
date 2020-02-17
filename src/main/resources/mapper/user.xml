@@ -5,8 +5,8 @@
 <mapper namespace="com.yndg.blog.repository.UserRepository">
 	
 	<insert id = "save" >
-		insert into user(username, password, email, createDate) 
-		values(#{username}, #{password}, #{email}, now())
+		insert into user(username, password, email, role, createDate) 
+		values(#{username}, #{password}, #{email}, 'USER', now())
 	</insert>
 	
 	<select id="findByUsername" resultType="int">
@@ -24,5 +24,10 @@
 	<select id="findById" resultType="com.yndg.blog.model.user.User">
 		select id, username, email, profile from user where id = #{id}
 	</select>
+	
+	<select id="authentication" resultType="com.yndg.blog.model.user.User">
+		select * from user where username = #{username}
+	</select>
+	
 	
 </mapper>

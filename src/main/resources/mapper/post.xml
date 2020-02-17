@@ -4,11 +4,35 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yndg.blog.repository.PostRepository">
 
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title LIKE CONCAT ('%', #{keyword}, '%')
+						</when>
+<!-- 						<when test="type == 'C'.toString()"> -->
+<!-- 							content LIKE CONCAT ('%', #{keyword}, '%')  -->
+<!-- 						</when> -->
+						<when test="type == 'W'.toString()">
+							username LIKE CONCAT ('%', #{keyword}, '%')
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
 	<select id="findAllVM" resultType="com.yndg.blog.model.post.dto.RespListDto">
 		select p.id, p.title, u.username, p.createDate
 		from post p inner join user u
 		on p.userId = u.id
+		where
+		<include refid="criteria"/>
+		p.id > 0
 		order by p.id desc
+		limit #{startPage}, 10
 	</select>
 	
 	<select id="findById" resultType="com.yndg.blog.model.post.Post">  
@@ -30,5 +54,16 @@
 	<update id="updateProc" >
 		UPDATE post SET title = #{title}, content = #{content} WHERE id = #{id};
 	</update>
+	
+	<select id="getBoardListCnt" resultType="int">
+		SELECT count(*) 
+		FROM post p inner join user u
+		on p.userId = u.id		
+		where
+		<include refid="criteria"/>
+		p.id > 0
+		order by p.id DESC
+
+	</select>
 	
 </mapper>
