@@ -44,22 +44,29 @@
 
 	<!-- searchForm -->
 	<form id='searchForm' action="/post" method='get'>
-		<div class="form-group">
-			<select name='type' class="form-control">
-				<option value="" <c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
-				<option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
-<%-- 				<option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option> --%>
-				<option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
-<%-- 				<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'?'selected':''}"/>>제목 or 내용</option> --%>
-				<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목 or 작성자</option>
-<%-- 				<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}"/>>제목 or 내용 or 작성자</option> --%>
-			</select>
+		<div class="row">
+			<div class="form-group col-2">
+				<select name='type' class="form-control">
+					<option value="" <c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
+					<option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
+					<%-- 				<option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option> --%>
+					<option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
+					<%-- 				<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'?'selected':''}"/>>제목 or 내용</option> --%>
+					<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목 or 작성자</option>
+					<%-- 				<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}"/>>제목 or 내용 or 작성자</option> --%>
+				</select>
+			</div>
+			<div class="col-8">
+				<input class="form-control" type='text' name='keyword' value="${pageMaker.cri.keyword}">
+				<input type='hidden' name='page' value="${pageMaker.cri.page}">
+				<input type='hidden' name='perPageNum' value="${pageMaker.cri.perPageNum}">
+			</div>
+			<div class="col-2">
+				<button type="button" id='s_btn' class="btn btn-info">Search</button>
+			</div>
 		</div>
-		<input class="form-control" type='text' name='keyword' value="${pageMaker.cri.keyword}">
-		<input type='hidden' name='page' value="${pageMaker.cri.page}">
-		<input type='hidden' name='perPageNum' value="${pageMaker.cri.perPageNum}">
-		<button type="button" id='s_btn' class="btn btn-info">Search</button>
 	</form>
+
 </div>
 <form id="jobForm">
 	<input type="hidden" name="page" value="${pageMaker.cri.page}" />

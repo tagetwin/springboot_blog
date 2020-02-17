@@ -59,7 +59,7 @@ public class PostController {
 	}
 	
 	@GetMapping("/post/detail")
-	public String detail(@RequestParam("id") int id, Model model, @ModelAttribute("cri2") Criteria cri) {
+	public String detail(@RequestParam("id") int id, Model model, @ModelAttribute("cri") Criteria cri) {
 		Post post = postService.상세보기(id);
 		List<RespDetailDto> comments = commentService.댓글목록보기(id);
 		model.addAttribute("post", post);

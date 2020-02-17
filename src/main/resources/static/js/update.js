@@ -17,7 +17,7 @@ $('#update--submit').on('click', function() {
 
 	}).done(function(r) {
 		alert('수정이 성공하였습니다.');
-		location.href = '/post/detail/' + no;
+		location.href = '/post';
 
 	}).fail(function(r) {
 		alert('통신이 실패하였습니다.');

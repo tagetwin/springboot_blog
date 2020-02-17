@@ -21,7 +21,7 @@
 				<button id="post--delete--submit" class="btn btn-danger ml-3">삭제</button>
 			</c:if>
 			<div class="ml-auto">
-				<a href="/post?page=${cri2.page}" class="btn btn-primary">목록</a>
+				<a href="/post?page=${cri.page}&perPageNum=${cri.perPageNum}&keyword=${cri.keyword}&type=${cri.type}" class="btn btn-primary">목록</a>
 			</div>
 		</div>
 	</div>
